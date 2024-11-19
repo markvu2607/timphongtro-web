@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "15.0.3",
@@ -19,6 +20,8 @@
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -26,6 +29,8 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-tailwindcss": "^3.17.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
