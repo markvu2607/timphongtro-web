@@ -42,7 +42,7 @@ export function SignInForm() {
     const result = await signIn(data)
     if (result.success) {
       toast.success("Signed in successfully!")
-      router.push("/dashboard")
+      router.push("/dashboard/posts")
     }
     if (result.error) {
       setServerError(result.error)

@@ -1,14 +1,14 @@
 "use server"
 
-import { redirect, RedirectType } from "next/navigation"
 import { revalidatePath } from "next/cache"
-import { z } from "zod"
 import { cookies } from "next/headers"
+import { redirect, RedirectType } from "next/navigation"
+import { z } from "zod"
 
+import { signInSchema, signUpSchema, updateProfileSchema } from "@/lib/schemas"
 import * as authApi from "./api/auth.api"
 import * as postApi from "./api/post.api"
 import * as userApi from "./api/user.api"
-import { signInSchema, signUpSchema, updateProfileSchema } from "@/lib/schemas"
 
 export const signIn = async (
   payload: z.infer<typeof signInSchema>
@@ -52,21 +52,24 @@ export const signIn = async (
 
 export const signUp = async (
   payload: z.infer<typeof signUpSchema>
-): Promise<{ success?: boolean; error?: string }> => {
+): Promise<{ success: boolean; message: string }> => {
   try {
     const parsed = signUpSchema.safeParse(payload)
 
     if (!parsed.success) {
       return {
-        error: "Form validation failed!",
+        success: false,
+        message: "Form validation failed!",
       }
     }
 
+    delete parsed.data.confirmPassword
     const { accessToken, user } = await authApi.signUp(parsed.data)
 
     if (!accessToken || !user) {
       return {
-        error: "Invalid email or password!",
+        success: false,
+        message: "Invalid email or password!",
       }
     }
 
@@ -82,10 +85,12 @@ export const signUp = async (
 
     return {
       success: true,
+      message: "Signed up successfully!",
     }
   } catch {
     return {
-      error: "Something went wrong!",
+      success: false,
+      message: "Something went wrong!",
     }
   }
 }

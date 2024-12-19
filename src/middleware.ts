@@ -10,7 +10,7 @@ export function middleware(req: NextRequest) {
 
   if (authRoutes.some((route) => pathname.startsWith(route))) {
     if (token) {
-      return NextResponse.redirect(new URL("/dashboard", req.url))
+      return NextResponse.redirect(new URL("/dashboard/posts", req.url))
     }
     return NextResponse.next()
   }

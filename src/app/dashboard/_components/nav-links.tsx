@@ -3,10 +3,9 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import clsx from "clsx"
-import { NotebookPenIcon, UserPenIcon, FolderKanbanIcon } from "lucide-react"
+import { NotebookPenIcon, UserPenIcon } from "lucide-react"
 
 const links = [
-  { name: "Home", href: "/dashboard", icon: FolderKanbanIcon },
   {
     name: "Manage Posts",
     href: "/dashboard/posts",

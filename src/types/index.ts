@@ -1,3 +1,9 @@
+export type ApiResponseError = {
+  statusCode: number
+  error: string
+  message: string
+}
+
 export type QueryParams = {
   limit?: number
   page?: number

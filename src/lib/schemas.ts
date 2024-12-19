@@ -14,20 +14,25 @@ export const signInSchema = z.object({
     .max(32, "Password must be less than 32 characters"),
 })
 
-export const signUpSchema = z.object({
-  email: z
-    .string({ required_error: "Email is required" })
-    .email("Invalid email"),
-  password: z
-    .string({ required_error: "Password is required" })
-    .min(8, "Password must be more than 8 characters")
-    .max(32, "Password must be less than 32 characters"),
-  confirmPassword: z
-    .string({ required_error: "Confirm password is required" })
-    .min(1, "Confirm password is required")
-    .min(8, "Confirm password must be more than 8 characters")
-    .max(32, "Confirm password must be less than 32 characters"),
-})
+export const signUpSchema = z
+  .object({
+    email: z
+      .string({ required_error: "Email is required" })
+      .email("Invalid email"),
+    password: z
+      .string({ required_error: "Password is required" })
+      .min(8, "Password must be more than 8 characters")
+      .max(32, "Password must be less than 32 characters"),
+    confirmPassword: z.string().optional(),
+    name: z
+      .string({ required_error: "Name is required" })
+      .min(5, "Name is required"),
+    phone: z.string({ required_error: "Phone number is required" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  })
 
 export const createPostSchema = z.object({
   title: z.string({ required_error: "Title is required" }),

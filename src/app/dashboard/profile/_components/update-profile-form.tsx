@@ -17,12 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { sendVerificationEmail, updateMe } from "@/lib/actions"
 import { updateProfileSchema } from "@/lib/schemas"
 import { User } from "@/types"
@@ -73,16 +67,9 @@ const UpdateProfileForm = ({ user }: Props) => {
                 className="bg-gray-100"
               />
               {user.isVerified ? (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <CheckCircle2Icon className="size-4 text-green-500" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Verified email</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <CheckCircle2Icon className="size-4 text-green-500" />
+                </div>
               ) : (
                 <Button
                   type="button"

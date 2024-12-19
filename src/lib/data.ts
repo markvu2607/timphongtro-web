@@ -4,7 +4,7 @@ import * as userApi from "./api/user.api"
 import * as postApi from "./api/post.api"
 import * as provinceApi from "./api/province.api"
 import * as districtApi from "./api/district.api"
-import { GetMyPostsResponse, QueryParams } from "@/types"
+import { ApiResponseError, GetMyPostsResponse, QueryParams } from "@/types"
 
 export const getMe = async () => {
   return userApi.getMe()
@@ -12,7 +12,7 @@ export const getMe = async () => {
 
 export const getMyPosts = async (
   queryParams: QueryParams
-): Promise<GetMyPostsResponse> => {
+): Promise<GetMyPostsResponse | ApiResponseError> => {
   return postApi.getMyPosts(queryParams)
 }
 

@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,44 +16,41 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { signUp } from "@/lib/actions"
 import { signUpSchema } from "@/lib/schemas"
-import { z } from "zod"
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { LoaderCircleIcon } from "lucide-react"
+
 export function SignUpForm() {
   const router = useRouter()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof signUpSchema>>({
+  const form = useForm<z.infer<typeof signUpSchema>>({
     defaultValues: {
       email: "",
       password: "",
       confirmPassword: "",
+      name: "",
+      phone: "",
     },
     resolver: zodResolver(signUpSchema),
   })
-  const [serverError, setServerError] = useState<string | undefined>(undefined)
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-    setServerError(undefined)
+    const { success, message } = await signUp(data)
+    if (!success) {
+      toast.error(message)
+      return
+    }
 
-    const result = await signUp(data)
-    if (result.success) {
-      toast.success("Signed up successfully!")
-      router.push("/dashboard")
-    }
-    if (result.error) {
-      setServerError(result.error)
-    }
-  }
-
-  const handleInputChange = () => {
-    if (serverError) {
-      setServerError(undefined)
-    }
+    toast.success(message)
+    router.push("/dashboard/posts")
   }
 
   return (
@@ -65,49 +62,118 @@ export function SignUpForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                {...register("email")}
-                onChange={(e) => {
-                  register("email").onChange(e)
-                  handleInputChange()
-                }}
-              />
-              {errors.email && (
-                <p className="text-sm text-red-500">{errors.email.message}</p>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="m@example.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                {...register("password")}
-                onChange={(e) => {
-                  register("password").onChange(e)
-                  handleInputChange()
-                }}
-              />
-              {errors.password && (
-                <p className="text-sm text-red-500">
-                  {errors.password.message}
-                </p>
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="password"
+                      type="password"
+                      {...field}
+                      placeholder="Password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </div>
-            {serverError && (
-              <p className="bg-red-200 text-sm text-red-500">{serverError}</p>
-            )}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Signing up..." : "Sign up"}
+            />
+
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="confirmPassword">
+                    Confirm password
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      {...field}
+                      placeholder="Confirm password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="name"
+                      type="text"
+                      {...field}
+                      placeholder="Name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="phone">Phone</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="phone"
+                      type="text"
+                      {...field}
+                      placeholder="Phone"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? (
+                <LoaderCircleIcon className="size-16 animate-spin text-blue-600" />
+              ) : (
+                "Sign up"
+              )}
             </Button>
-          </div>
-        </form>
+          </form>
+        </Form>
         <div className="mt-4 text-center text-sm">
           Have an account?{" "}
           <Link href="/auth/sign-in" className="underline">
