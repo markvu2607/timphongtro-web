@@ -17,9 +17,9 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { signIn } from "@/lib/action"
-import { SignInSchema, signInSchema } from "@/lib/schema"
-
+import { signIn } from "@/lib/actions"
+import { signInSchema } from "@/lib/schemas"
+import { z } from "zod"
 export function SignInForm() {
   const router = useRouter()
 
@@ -36,7 +36,7 @@ export function SignInForm() {
   })
   const [serverError, setServerError] = useState<string | undefined>(undefined)
 
-  const onSubmit = async (data: SignInSchema) => {
+  const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     setServerError(undefined)
 
     const result = await signIn(data)
@@ -100,7 +100,9 @@ export function SignInForm() {
               )}
             </div>
             {serverError && (
-              <p className="bg-red-200 text-sm text-red-500">{serverError}</p>
+              <p className="rounded-sm bg-red-50 p-1 text-sm text-red-500">
+                {serverError}
+              </p>
             )}
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? "Signing in..." : "Sign in"}

@@ -17,9 +17,9 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { signUp } from "@/lib/action"
-import { SignUpSchema, signUpSchema } from "@/lib/schema"
-
+import { signUp } from "@/lib/actions"
+import { signUpSchema } from "@/lib/schemas"
+import { z } from "zod"
 export function SignUpForm() {
   const router = useRouter()
 
@@ -27,16 +27,17 @@ export function SignUpForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<z.infer<typeof signUpSchema>>({
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
     resolver: zodResolver(signUpSchema),
   })
   const [serverError, setServerError] = useState<string | undefined>(undefined)
 
-  const onSubmit = async (data: SignUpSchema) => {
+  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setServerError(undefined)
 
     const result = await signUp(data)
