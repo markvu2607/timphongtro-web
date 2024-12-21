@@ -50,6 +50,8 @@ export const CreatePostForm = ({
       title: "",
       description: "",
       address: "",
+      price: 0,
+      area: 0,
       provinceId: "",
       districtId: "",
       postImages: [],
@@ -64,6 +66,8 @@ export const CreatePostForm = ({
     formData.append("title", data.title)
     formData.append("description", data.description)
     formData.append("address", data.address)
+    formData.append("price", data.price.toString())
+    formData.append("area", data.area.toString())
     formData.append("provinceId", data.provinceId)
     formData.append("districtId", data.districtId)
     formData.append("longitude", "10.43242")
@@ -141,6 +145,32 @@ export const CreatePostForm = ({
                       <RefreshCcwIcon />
                     </Button>
                   </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="price">Giá (VND)</FormLabel>
+                  <FormControl>
+                    <Input id="price" type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="area"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="area">Diện tích (m²)</FormLabel>
+                  <FormControl>
+                    <Input id="area" type="number" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

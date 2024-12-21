@@ -1,8 +1,10 @@
 "use server"
 
 import { z } from "zod"
+
 import { signInSchema, signUpSchema } from "../schemas"
 import * as apiClient from "./api-client"
+
 export const signIn = async (payload: z.infer<typeof signInSchema>) =>
   apiClient
     .post("/auth/sign-in", { body: JSON.stringify(payload) })

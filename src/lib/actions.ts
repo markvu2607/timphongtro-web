@@ -2,13 +2,18 @@
 
 import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
-import { redirect, RedirectType } from "next/navigation"
 import { z } from "zod"
 
-import { signInSchema, signUpSchema, updateProfileSchema } from "@/lib/schemas"
+import {
+  reportPostSchema,
+  signInSchema,
+  signUpSchema,
+  updateProfileSchema,
+} from "@/lib/schemas"
 import * as authApi from "./api/auth.api"
 import * as postApi from "./api/post.api"
 import * as userApi from "./api/user.api"
+import * as reportApi from "./api/report.api"
 
 export const signIn = async (
   payload: z.infer<typeof signInSchema>
@@ -35,10 +40,7 @@ export const signIn = async (
       httpOnly: true,
       sameSite: "lax",
     })
-    cookieStore.set("user", JSON.stringify(user), {
-      httpOnly: true,
-      sameSite: "lax",
-    })
+    cookieStore.set("user", JSON.stringify(user))
 
     return {
       success: true,
@@ -78,10 +80,7 @@ export const signUp = async (
       httpOnly: true,
       sameSite: "lax",
     })
-    cookieStore.set("user", JSON.stringify(user), {
-      httpOnly: true,
-      sameSite: "lax",
-    })
+    cookieStore.set("user", JSON.stringify(user))
 
     return {
       success: true,
@@ -99,8 +98,6 @@ export const signOut = async () => {
   const cookieStore = await cookies()
   cookieStore.delete("accessToken")
   cookieStore.delete("user")
-
-  redirect("/", RedirectType.replace)
 }
 
 export const deletePost = async (id: string) => {
@@ -161,6 +158,13 @@ export const sendVerificationEmail = async () => {
 
 export const verifyEmail = async (token: string) => {
   const res = await authApi.verifyEmail({ token })
+  if (res.error) {
+    return "Something went wrong!"
+  }
+}
+
+export const reportPost = async (data: z.infer<typeof reportPostSchema>) => {
+  const res = await reportApi.reportPost(data)
   if (res.error) {
     return "Something went wrong!"
   }

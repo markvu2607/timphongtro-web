@@ -41,8 +41,11 @@ export type Post = {
   title: string
   description: string
   createdAt: string
+  publishedAt: string
   thumbnail: string
   address: string
+  price: number
+  area: number
   longitude: number
   latitude: number
   status: string

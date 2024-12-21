@@ -47,3 +47,6 @@ export const publishPost = async (id: string) =>
 
 export const closePost = async (id: string) =>
   apiClient.post(`/posts/${id}/close`)
+
+export const getPostListByIds = async (ids: string[]) =>
+  apiClient.get(`/posts/list?ids=${ids.join(",")}`).then((data) => data.json())

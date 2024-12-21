@@ -51,6 +51,8 @@ export const EditPostForm = ({
       title: post.title,
       description: post.description,
       address: post.address,
+      price: post.price,
+      area: post.area,
       provinceId: post.province.id,
       districtId: post.district.id,
       existingPostImages: post.postImages,
@@ -65,6 +67,8 @@ export const EditPostForm = ({
     formData.append("title", data.title)
     formData.append("description", data.description)
     formData.append("address", data.address)
+    formData.append("price", data.price.toString())
+    formData.append("area", data.area.toString())
     formData.append("provinceId", data.provinceId)
     formData.append("districtId", data.districtId)
     data.existingPostImages.map((existingImage) => {
@@ -143,6 +147,32 @@ export const EditPostForm = ({
                       <RefreshCcwIcon />
                     </Button>
                   </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="price">Giá (VND)</FormLabel>
+                  <FormControl>
+                    <Input id="price" type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="area"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="area">Diện tích (m²)</FormLabel>
+                  <FormControl>
+                    <Input id="area" type="number" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

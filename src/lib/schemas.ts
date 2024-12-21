@@ -1,6 +1,7 @@
+import { z } from "zod"
+
 import { ACCEPTED_IMAGE_TYPES } from "@/constants"
 import { MAX_FILE_SIZE } from "@/constants"
-import { z } from "zod"
 
 export const signInSchema = z.object({
   email: z
@@ -38,6 +39,8 @@ export const createPostSchema = z.object({
   title: z.string({ required_error: "Title is required" }),
   description: z.string({ required_error: "Description is required" }),
   address: z.string({ required_error: "Address is required" }),
+  price: z.number({ required_error: "Price is required" }),
+  area: z.number({ required_error: "Area is required" }),
   provinceId: z.string({ required_error: "Province is required" }),
   districtId: z.string({ required_error: "District is required" }),
   postImages: z
@@ -63,6 +66,8 @@ export const editPostSchema = z.object({
   title: z.string({ required_error: "Title is required" }),
   description: z.string({ required_error: "Description is required" }),
   address: z.string({ required_error: "Address is required" }),
+  price: z.number({ required_error: "Price is required" }),
+  area: z.number({ required_error: "Area is required" }),
   provinceId: z.string({ required_error: "Province is required" }),
   districtId: z.string({ required_error: "District is required" }),
   existingPostImages: z.array(
@@ -87,6 +92,14 @@ export const editPostSchema = z.object({
 })
 
 export const updateProfileSchema = z.object({
+  name: z.string({ required_error: "Name is required" }),
+  phone: z.string({ required_error: "Phone number is required" }),
+})
+
+export const reportPostSchema = z.object({
+  postId: z.string({ required_error: "Post ID is required" }),
+  reason: z.string({ required_error: "Reason is required" }),
+  description: z.string(),
   name: z.string({ required_error: "Name is required" }),
   phone: z.string({ required_error: "Phone number is required" }),
 })
