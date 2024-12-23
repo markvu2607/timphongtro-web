@@ -50,3 +50,10 @@ export const closePost = async (id: string) =>
 
 export const getPostListByIds = async (ids: string[]) =>
   apiClient.get(`/posts/list?ids=${ids.join(",")}`).then((data) => data.json())
+
+export const getPosts = async (queryParams: QueryParams) =>
+  apiClient
+    .get(
+      `/posts?limit=${queryParams.limit}&page=${queryParams.page}&search=${queryParams.query}`
+    )
+    .then((data) => data.json())

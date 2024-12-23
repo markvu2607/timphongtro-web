@@ -55,7 +55,7 @@ export type Post = {
   postImages: PostImage[]
 }
 
-export type GetMyPostsResponse = {
+export type GetPostsResponse = {
   items: Post[]
   totalPages: number
   total: number

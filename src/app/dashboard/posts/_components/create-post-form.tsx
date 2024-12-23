@@ -156,7 +156,12 @@ export const CreatePostForm = ({
                 <FormItem>
                   <FormLabel htmlFor="price">Giá (VND)</FormLabel>
                   <FormControl>
-                    <Input id="price" type="number" {...field} />
+                    <Input
+                      id="price"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -169,7 +174,12 @@ export const CreatePostForm = ({
                 <FormItem>
                   <FormLabel htmlFor="area">Diện tích (m²)</FormLabel>
                   <FormControl>
-                    <Input id="area" type="number" {...field} />
+                    <Input
+                      id="area"
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
