@@ -16,8 +16,12 @@ export const getMyPosts = async (
   return postApi.getMyPosts(queryParams)
 }
 
-export const getPostById = async (id: string): Promise<Post> => {
-  return postApi.getPostById(id)
+export const getPublishedPostById = async (id: string): Promise<Post> => {
+  return postApi.getPublishedPostById(id)
+}
+
+export const getMyPostById = async (id: string): Promise<Post> => {
+  return postApi.getMyPostById(id)
 }
 
 export const getAllProvinces = async () => {
@@ -29,11 +33,11 @@ export const getAllDistricts = async () => {
 }
 
 export const getSavedPost = async (ids: string[]): Promise<Post[]> => {
-  return postApi.getPostListByIds(ids)
+  return postApi.getPublishedPostListByIds(ids)
 }
 
-export const getPosts = async (
+export const getPublishedPosts = async (
   queryParams: QueryParams
 ): Promise<GetPostsResponse> => {
-  return postApi.getPosts(queryParams)
+  return postApi.getPublishedPosts(queryParams)
 }

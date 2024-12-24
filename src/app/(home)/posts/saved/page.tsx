@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
 
+import { getSavedPost } from "@/lib/data"
 import { Post } from "@/types"
 import { PostCard } from "../_components/post-card"
-import { getSavedPost } from "@/lib/data"
 
 const Page = () => {
   const [posts, setPosts] = useState<Post[]>([])

@@ -191,15 +191,18 @@ export const CreatePostForm = ({
                 name="provinceId"
                 render={({ field }) => (
                   <FormItem className="grid gap-2">
-                    <FormLabel htmlFor="provinceId">Province</FormLabel>
+                    <FormLabel htmlFor="provinceId">Tỉnh/Thành phố</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value}
-                        onValueChange={field.onChange}
+                        onValueChange={(value) => {
+                          field.onChange(value)
+                          form.setValue("districtId", "")
+                        }}
                         defaultValue={field.value}
                       >
                         <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select Province" />
+                          <SelectValue placeholder="Chọn tỉnh/thành phố" />
                         </SelectTrigger>
                         <SelectContent>
                           {provinces.map((province) => (
@@ -219,22 +222,29 @@ export const CreatePostForm = ({
                 name="districtId"
                 render={({ field }) => (
                   <FormItem className="grid gap-2">
-                    <FormLabel htmlFor="districtId">District</FormLabel>
+                    <FormLabel htmlFor="districtId">Quận/Huyện</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value}
                         onValueChange={field.onChange}
                         defaultValue={field.value}
+                        disabled={!form.watch("provinceId")}
                       >
                         <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select District" />
+                          <SelectValue placeholder="Chọn quận/huyện" />
                         </SelectTrigger>
                         <SelectContent>
-                          {districts.map((district) => (
-                            <SelectItem key={district.id} value={district.id}>
-                              {district.name}
-                            </SelectItem>
-                          ))}
+                          {districts
+                            .filter(
+                              (district) =>
+                                district.province.id ===
+                                form.watch("provinceId")
+                            )
+                            .map((district) => (
+                              <SelectItem key={district.id} value={district.id}>
+                                {district.name}
+                              </SelectItem>
+                            ))}
                         </SelectContent>
                       </Select>
                     </FormControl>

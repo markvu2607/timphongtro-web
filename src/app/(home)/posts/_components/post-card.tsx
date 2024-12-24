@@ -1,5 +1,4 @@
 import Link from "next/link"
-import dayjs from "dayjs"
 import { PhoneCallIcon } from "lucide-react"
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
@@ -17,7 +16,9 @@ export function PostCard({ post }: PostCardProps) {
     <Card className="overflow-hidden">
       <Link href={`/posts/${post.id}`}>
         <CardHeader className="p-4 pb-0">
-          <QuiltedImages images={post.postImages.slice(0, 4)} />
+          <QuiltedImages
+            images={post.postImages.map((image) => image.url).slice(0, 4)}
+          />
         </CardHeader>
       </Link>
       <CardContent className="p-4">
@@ -33,9 +34,6 @@ export function PostCard({ post }: PostCardProps) {
               <p className="text-sm text-gray-700">{post.area}m²</p>
               <p className="text-sm text-gray-700">
                 {post.district.name}, {post.province.name}
-              </p>
-              <p className="text-sm text-gray-700">
-                Đăng {dayjs(post.publishedAt).fromNow()}
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
+"use client"
+
 import Image from "next/image"
 import React from "react"
-
-import { PostImage } from "@/types"
 
 const gridClassname = [
   "col-span-2 row-span-2 aspect-square",
@@ -11,20 +11,26 @@ const gridClassname = [
 ]
 
 type QuiltedImagesProps = {
-  images: PostImage[]
+  images: string[]
+  onClick?: (index: number) => void
 }
 
-export const QuiltedImages = ({ images }: QuiltedImagesProps) => {
+export const QuiltedImages = ({ images, onClick }: QuiltedImagesProps) => {
   const showedImages = images.map((image, index) => ({
-    ...image,
+    url: image,
     className: gridClassname[index],
   }))
 
   return (
     <div className="grid w-full grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-md">
-      {showedImages.map((image) => (
-        <div key={image.id} className={`${image.className} relative`}>
-          <Image src={image.url} alt={image.url} fill />
+      {showedImages.map((image, index) => (
+        <div key={image.url} className={`${image.className} relative`}>
+          <Image
+            src={image.url}
+            alt={image.url}
+            fill
+            onClick={() => onClick?.(index)}
+          />
         </div>
       ))}
     </div>

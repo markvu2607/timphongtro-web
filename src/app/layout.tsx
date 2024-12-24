@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import dayjs from "dayjs"
+import * as dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import "dayjs/locale/vi"
 

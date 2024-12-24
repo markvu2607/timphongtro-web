@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/breadcrums"
-import { getAllDistricts, getAllProvinces, getPostById } from "@/lib/data"
+import { getAllDistricts, getAllProvinces, getMyPostById } from "@/lib/data"
 import { notFound } from "next/navigation"
 import { EditPostForm } from "../../_components/edit-post-form"
 
@@ -11,7 +11,7 @@ type EditPostPageProps = {
 
 export default async function EditPostPage(props: EditPostPageProps) {
   const { id } = await props.params
-  const post = await getPostById(id)
+  const post = await getMyPostById(id)
   const provinces = await getAllProvinces()
   const districts = await getAllDistricts()
 

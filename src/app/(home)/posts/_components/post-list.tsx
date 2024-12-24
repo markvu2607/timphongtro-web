@@ -1,5 +1,5 @@
 import { PaginationComponent } from "./pagination"
-import { getPosts } from "@/lib/data"
+import { getPublishedPosts } from "@/lib/data"
 import { PostCard } from "./post-card"
 
 const ITEMS_PER_PAGE = 10
@@ -15,7 +15,7 @@ export async function PostList({
     items: posts,
     totalPages,
     page: currentPage,
-  } = await getPosts({ page, query, limit: ITEMS_PER_PAGE })
+  } = await getPublishedPosts({ page, query, limit: ITEMS_PER_PAGE })
 
   if (posts.length === 0) {
     return (
