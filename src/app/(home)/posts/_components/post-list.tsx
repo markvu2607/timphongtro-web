@@ -1,4 +1,4 @@
-import { PaginationComponent } from "./pagination"
+import { PostPagination } from "./post-pagination"
 import { getPublishedPosts } from "@/lib/data"
 import { PostCard } from "./post-card"
 
@@ -7,15 +7,22 @@ const ITEMS_PER_PAGE = 10
 export async function PostList({
   query,
   page,
+  otherFilter,
 }: {
   query: string
   page: number
+  otherFilter: Record<string, string>
 }) {
   const {
     items: posts,
     totalPages,
     page: currentPage,
-  } = await getPublishedPosts({ page, query, limit: ITEMS_PER_PAGE })
+  } = await getPublishedPosts({
+    page,
+    query,
+    limit: ITEMS_PER_PAGE,
+    ...otherFilter,
+  })
 
   if (posts.length === 0) {
     return (
@@ -33,10 +40,7 @@ export async function PostList({
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
-          <PaginationComponent
-            totalPages={totalPages}
-            currentPage={currentPage}
-          />
+          <PostPagination totalPages={totalPages} currentPage={currentPage} />
         </div>
         <div className="col-span-1"></div>
       </div>

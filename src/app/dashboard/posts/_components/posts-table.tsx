@@ -7,6 +7,21 @@ import { Post } from "@/types"
 import { ClosePost, DeletePost, PublishPost, UpdatePost } from "./buttons"
 import Pagination from "./pagination"
 
+const badgeColor = (status: EPostStatus) => {
+  switch (status) {
+    case EPostStatus.PUBLISHED:
+      return "bg-green-100 text-green-800"
+    case EPostStatus.REVIEWING:
+      return "bg-yellow-100 text-yellow-800"
+    case EPostStatus.REJECTED:
+      return "bg-red-100 text-red-800"
+    case EPostStatus.APPROVED:
+      return "bg-blue-100 text-blue-800"
+    default:
+      return "bg-gray-100 text-gray-800"
+  }
+}
+
 export type PostsTableProps = {
   items: Post[]
   totalPages: number
@@ -81,7 +96,9 @@ export default async function PostsTable({
                         })}
                       </td>
                       <td className="whitespace-nowrap p-3">
-                        <Badge>{post.status.toLocaleLowerCase()}</Badge>
+                        <Badge className={badgeColor(post.status)}>
+                          {post.status.toLocaleLowerCase()}
+                        </Badge>
                       </td>
                       <td className="whitespace-nowrap p-3">
                         {post.district.name}

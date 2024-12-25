@@ -1,7 +1,8 @@
-import type { Metadata } from "next"
 import * as dayjs from "dayjs"
-import relativeTime from "dayjs/plugin/relativeTime"
 import "dayjs/locale/vi"
+import relativeTime from "dayjs/plugin/relativeTime"
+import type { Metadata } from "next"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { Toaster } from "@/components/ui/sonner"
 import { inter } from "./fonts"
@@ -23,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        {children}
+        <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster />
       </body>
     </html>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
+
 import {
   Pagination,
   PaginationContent,
@@ -11,7 +12,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 
-export function PaginationComponent({
+export function PostPagination({
   totalPages,
   currentPage,
 }: {

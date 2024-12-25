@@ -1,3 +1,5 @@
+import { EPostStatus } from "@/constants"
+
 export type ApiResponseError = {
   statusCode: number
   error: string
@@ -8,6 +10,15 @@ export type QueryParams = {
   limit?: number
   page?: number
   query?: string
+}
+
+export type PostQueryParams = QueryParams & {
+  provinceId?: string
+  districtId?: string
+  minPrice?: number
+  maxPrice?: number
+  minArea?: number
+  maxArea?: number
 }
 
 export type User = {
@@ -48,7 +59,7 @@ export type Post = {
   area: number
   longitude: number
   latitude: number
-  status: string
+  status: EPostStatus
   district: District
   province: Province
   user?: User

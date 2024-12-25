@@ -103,3 +103,12 @@ export const reportPostSchema = z.object({
   name: z.string({ required_error: "Name is required" }),
   phone: z.string({ required_error: "Phone number is required" }),
 })
+
+export const postSearchParamsSchema = z.object({
+  provinceId: z.string().optional(),
+  districtId: z.string().optional(),
+  minPrice: z.coerce.number().optional(),
+  maxPrice: z.coerce.number().optional(),
+  minArea: z.number().optional(),
+  maxArea: z.number().optional(),
+})
