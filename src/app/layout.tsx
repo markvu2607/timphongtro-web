@@ -3,6 +3,7 @@ import "dayjs/locale/vi"
 import relativeTime from "dayjs/plugin/relativeTime"
 import type { Metadata } from "next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
+import "quill/dist/quill.snow.css"
 
 import { Toaster } from "@/components/ui/sonner"
 import { inter } from "./fonts"

@@ -1,10 +1,19 @@
 "use server"
 
 import { cookies } from "next/headers"
-import * as apiClient from "./api-client"
-import { PostQueryParams, QueryParams } from "@/types"
 
-export const getMyPosts = async (queryParams: QueryParams) =>
+import * as apiClient from "./api-client"
+import {
+  ApiResponseError,
+  PostQueryParams,
+  QueryParams,
+  Post,
+  PaginatedResponse,
+} from "@/types"
+
+export const getMyPosts = async (
+  queryParams: QueryParams
+): Promise<PaginatedResponse<Post> | ApiResponseError> =>
   apiClient
     .get(
       `/posts/mine?limit=${queryParams.limit}&page=${queryParams.page}&search=${queryParams.query}`
@@ -40,21 +49,25 @@ export const updatePost = async (id: string, formData: FormData) => {
   }).then((data) => data.json())
 }
 
-export const getMyPostById = async (id: string) =>
+export const getMyPostById = async (id: string): Promise<Post> =>
   apiClient.get(`/posts/mine/${id}`).then((data) => data.json())
 
 export const publishPost = async (id: string) =>
-  apiClient.post(`/posts/mine/${id}/publish`)
+  apiClient.post(`/posts/mine/${id}/publish`).then((data) => data.json())
 
 export const closePost = async (id: string) =>
   apiClient.post(`/posts/mine/${id}/close`)
 
-export const getPublishedPostListByIds = async (ids: string[]) =>
+export const getPublishedPostListByIds = async (
+  ids: string[]
+): Promise<Post[]> =>
   apiClient
     .get(`/posts/published/list?ids=${ids.join(",")}`)
     .then((data) => data.json())
 
-export const getPublishedPosts = async (queryParams: PostQueryParams) => {
+export const getPublishedPosts = async (
+  queryParams: PostQueryParams
+): Promise<PaginatedResponse<Post>> => {
   const params = new URLSearchParams()
   if (queryParams.limit) params.append("limit", queryParams.limit.toString())
   if (queryParams.page) params.append("page", queryParams.page.toString())
@@ -78,5 +91,5 @@ export const getPublishedPosts = async (queryParams: PostQueryParams) => {
     .then((data) => data.json())
 }
 
-export const getPublishedPostById = async (id: string) =>
+export const getPublishedPostById = async (id: string): Promise<Post> =>
   apiClient.get(`/posts/published/${id}`).then((data) => data.json())

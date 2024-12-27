@@ -4,7 +4,7 @@ import { Suspense } from "react"
 import { lusitana } from "@/app/fonts"
 import Search from "@/components/search"
 import { PostsTableSkeleton } from "@/components/skeletons"
-import { getMyPosts } from "@/lib/data"
+import * as postApi from "@/lib/api/post.api"
 import { isApiResponseError } from "@/lib/type-predicates"
 import { CreatePost } from "./_components/buttons"
 import PostsTable from "./_components/posts-table"
@@ -26,7 +26,7 @@ export default async function ManagePostsPage({
   searchParams: SearchParams
 }) {
   const { query = "", page = "1" } = await searchParams
-  const res = await getMyPosts({
+  const res = await postApi.getMyPosts({
     query,
     page: Number(page),
     limit: ITEMS_PER_PAGE,

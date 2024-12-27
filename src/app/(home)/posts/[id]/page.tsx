@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 
-import { getPublishedPostById } from "@/lib/data"
+import * as postApi from "@/lib/api/post.api"
 import { Owner } from "../_components/owner"
 import { PostDetails } from "../_components/post-details"
 import { PostImages } from "../_components/post-images"
@@ -14,7 +14,7 @@ type PageProps = {
 export default async function Page({ params }: PageProps) {
   const { id } = await params
 
-  const post = await getPublishedPostById(id)
+  const post = await postApi.getPublishedPostById(id)
 
   if (!post) {
     notFound()

@@ -1,9 +1,9 @@
 import { lusitana } from "@/app/fonts"
-import { getMe } from "@/lib/data"
+import * as userApi from "@/lib/api/user.api"
 import UpdateProfileForm from "./_components/update-profile-form"
 
 export default async function ProfilePage() {
-  const user = await getMe()
+  const user = await userApi.getMe()
 
   return (
     <div className="w-full">

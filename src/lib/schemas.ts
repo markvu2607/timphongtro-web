@@ -36,13 +36,26 @@ export const signUpSchema = z
   })
 
 export const createPostSchema = z.object({
-  title: z.string({ required_error: "Title is required" }),
-  description: z.string({ required_error: "Description is required" }),
-  address: z.string({ required_error: "Address is required" }),
+  title: z
+    .string({ required_error: "Title is required" })
+    .nonempty({ message: "Title is required" }),
+  description: z
+    .string({ required_error: "Description is required" })
+    .nonempty({ message: "Description is required" }),
+  address: z
+    .string({ required_error: "Address is required" })
+    .nonempty({ message: "Address is required" }),
   price: z.number({ required_error: "Price is required" }),
   area: z.number({ required_error: "Area is required" }),
-  provinceId: z.string({ required_error: "Province is required" }),
-  districtId: z.string({ required_error: "District is required" }),
+  provinceId: z
+    .string({ required_error: "Province is required" })
+    .nonempty({ message: "Province is required" }),
+  districtId: z
+    .string({ required_error: "District is required" })
+    .nonempty({ message: "District is required" }),
+  paymentPackageId: z
+    .string({ required_error: "Payment package is required" })
+    .nonempty({ message: "Payment package is required" }),
   postImages: z
     .array(
       z
@@ -62,14 +75,29 @@ export const createPostSchema = z.object({
 })
 
 export const editPostSchema = z.object({
-  id: z.string({ required_error: "Id is required" }),
-  title: z.string({ required_error: "Title is required" }),
-  description: z.string({ required_error: "Description is required" }),
-  address: z.string({ required_error: "Address is required" }),
+  id: z
+    .string({ required_error: "Id is required" })
+    .nonempty({ message: "Id is required" }),
+  title: z
+    .string({ required_error: "Title is required" })
+    .nonempty({ message: "Title is required" }),
+  description: z
+    .string({ required_error: "Description is required" })
+    .nonempty({ message: "Description is required" }),
+  address: z
+    .string({ required_error: "Address is required" })
+    .nonempty({ message: "Address is required" }),
   price: z.number({ required_error: "Price is required" }),
   area: z.number({ required_error: "Area is required" }),
-  provinceId: z.string({ required_error: "Province is required" }),
-  districtId: z.string({ required_error: "District is required" }),
+  provinceId: z
+    .string({ required_error: "Province is required" })
+    .nonempty({ message: "Province is required" }),
+  districtId: z
+    .string({ required_error: "District is required" })
+    .nonempty({ message: "District is required" }),
+  paymentPackageId: z
+    .string({ required_error: "Payment package is required" })
+    .nonempty({ message: "Payment package is required" }),
   existingPostImages: z.array(
     z.object({ id: z.string(), url: z.string(), key: z.string() })
   ),
@@ -92,16 +120,26 @@ export const editPostSchema = z.object({
 })
 
 export const updateProfileSchema = z.object({
-  name: z.string({ required_error: "Name is required" }),
-  phone: z.string({ required_error: "Phone number is required" }),
+  name: z
+    .string({ required_error: "Name is required" })
+    .nonempty({ message: "Name is required" }),
+  phone: z.string({ required_error: "Phone number is required" }).nonempty({
+    message: "Phone number is required",
+  }),
 })
 
 export const reportPostSchema = z.object({
   postId: z.string({ required_error: "Post ID is required" }),
-  reason: z.string({ required_error: "Reason is required" }),
+  reason: z
+    .string({ required_error: "Reason is required" })
+    .nonempty({ message: "Reason is required" }),
   description: z.string(),
-  name: z.string({ required_error: "Name is required" }),
-  phone: z.string({ required_error: "Phone number is required" }),
+  name: z
+    .string({ required_error: "Name is required" })
+    .nonempty({ message: "Name is required" }),
+  phone: z.string({ required_error: "Phone number is required" }).nonempty({
+    message: "Phone number is required",
+  }),
 })
 
 export const postSearchParamsSchema = z.object({

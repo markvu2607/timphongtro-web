@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { getSavedPost } from "@/lib/data"
+import * as postApi from "@/lib/api/post.api"
 import { Post } from "@/types"
 import { PostCard } from "../_components/post-card"
 
@@ -18,7 +18,7 @@ const Page = () => {
           localStorage.getItem("savedPostIds") || "[]"
         )
         if (savedPostIds.length > 0) {
-          const postList = await getSavedPost(savedPostIds)
+          const postList = await postApi.getPublishedPostListByIds(savedPostIds)
           setPosts(postList)
 
           const availableIds = postList.map((post) => post.id)

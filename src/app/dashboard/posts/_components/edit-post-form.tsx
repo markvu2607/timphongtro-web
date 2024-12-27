@@ -30,18 +30,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { ACCEPTED_IMAGE_TYPES } from "@/constants"
 import { updatePost } from "@/lib/actions"
 import { editPostSchema } from "@/lib/schemas"
-import { District, Post, Province } from "@/types"
+import { District, PaymentPackage, Post, Province } from "@/types"
 
 type EditPostFormProps = {
   post: Post
   provinces: Province[]
   districts: District[]
+  paymentPackages: PaymentPackage[]
 }
 
 export const EditPostForm = ({
   post,
   provinces,
   districts,
+  paymentPackages,
 }: EditPostFormProps) => {
   const router = useRouter()
 
@@ -55,6 +57,7 @@ export const EditPostForm = ({
       area: post.area,
       provinceId: post.province.id,
       districtId: post.district.id,
+      paymentPackageId: post.paymentPackage.id,
       existingPostImages: post.postImages,
       postImages: [],
     },
@@ -71,6 +74,7 @@ export const EditPostForm = ({
     formData.append("area", data.area.toString())
     formData.append("provinceId", data.provinceId)
     formData.append("districtId", data.districtId)
+    formData.append("paymentPackageId", data.paymentPackageId)
     data.existingPostImages.map((existingImage) => {
       formData.append("existingPostImages", existingImage.id)
     })
@@ -245,7 +249,54 @@ export const EditPostForm = ({
                 )}
               />
             </div>
-
+            <FormField
+              control={form.control}
+              name="paymentPackageId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="paymentPackageId">Gói tin</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Chọn gói tin">
+                          {paymentPackages.find(
+                            (paymentPackage) =>
+                              paymentPackage.id === field.value
+                          )?.name || ""}
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {paymentPackages.map((paymentPackage) => (
+                          <SelectItem
+                            key={paymentPackage.id}
+                            value={paymentPackage.id}
+                            className=""
+                          >
+                            <p className="font-bold">
+                              {paymentPackage.name}
+                              &nbsp; &nbsp;
+                              <span className="text-xs text-gray-500">
+                                {paymentPackage.price.toLocaleString()}
+                                &nbsp;
+                                {paymentPackage.currency}
+                              </span>
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {paymentPackage.description}
+                            </p>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="existingPostImages"

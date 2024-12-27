@@ -14,6 +14,7 @@ import * as authApi from "./api/auth.api"
 import * as postApi from "./api/post.api"
 import * as userApi from "./api/user.api"
 import * as reportApi from "./api/report.api"
+import { redirect } from "next/navigation"
 
 export const signIn = async (
   payload: z.infer<typeof signInSchema>
@@ -124,8 +125,12 @@ export const updatePost = async (formData: FormData) => {
 }
 
 export const publishPost = async (id: string) => {
-  await postApi.publishPost(id)
-  revalidatePath("/dashboard/posts")
+  const response = await postApi.publishPost(id)
+  if (response.redirectUrl) {
+    redirect(response.redirectUrl)
+  } else {
+    revalidatePath("/dashboard/posts")
+  }
 }
 
 export const closePost = async (id: string) => {

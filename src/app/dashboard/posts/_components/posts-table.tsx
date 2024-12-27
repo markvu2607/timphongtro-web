@@ -61,6 +61,9 @@ export default async function PostsTable({
                     Province
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
+                    Gói tin
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
                     Link
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
@@ -105,6 +108,9 @@ export default async function PostsTable({
                       </td>
                       <td className="whitespace-nowrap p-3">
                         {post.province.name}
+                      </td>
+                      <td className="whitespace-nowrap p-3">
+                        {post.paymentPackage.name}
                       </td>
                       <td className="whitespace-nowrap p-3">
                         <Link

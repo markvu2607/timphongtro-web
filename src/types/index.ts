@@ -62,12 +62,13 @@ export type Post = {
   status: EPostStatus
   district: District
   province: Province
+  paymentPackage: PaymentPackage
   user?: User
   postImages: PostImage[]
 }
 
-export type GetPostsResponse = {
-  items: Post[]
+export type PaginatedResponse<T> = {
+  items: T[]
   totalPages: number
   total: number
   limit: number
@@ -82,4 +83,24 @@ export type CreatePostPayload = {
   districtId: string
   provinceId: string
   postImages: File[]
+}
+
+export type News = {
+  id: number
+  title: string
+  shortDescription: string
+  thumbnail: {
+    src: string
+  }
+  content: string
+  province?: Province
+  publishedAt: string
+}
+
+export type PaymentPackage = {
+  id: string
+  name: string
+  description: string
+  price: number
+  currency: string
 }
