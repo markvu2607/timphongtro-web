@@ -1,14 +1,16 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { PlusIcon, RefreshCcwIcon, XIcon } from "lucide-react"
+import { PlusIcon, XIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useDebounceCallback } from "usehooks-ts"
 import { z } from "zod"
 
+import { MapBox } from "@/components/map-box"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -28,6 +30,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { ACCEPTED_IMAGE_TYPES } from "@/constants"
+import { useGeocode } from "@/hooks/use-geocode"
 import { updatePost } from "@/lib/actions"
 import { editPostSchema } from "@/lib/schemas"
 import { District, PaymentPackage, Post, Province } from "@/types"
@@ -64,6 +67,15 @@ export const EditPostForm = ({
     resolver: zodResolver(editPostSchema),
   })
 
+  const { geocode, refreshGeocode } = useGeocode({
+    longitude: post.longitude,
+    latitude: post.latitude,
+  })
+
+  const debouncedRefreshGeocode = useDebounceCallback((address: string) => {
+    refreshGeocode(address)
+  }, 1000)
+
   const onSubmit = async (data: z.infer<typeof editPostSchema>) => {
     const formData = new FormData()
     formData.append("id", data.id)
@@ -75,6 +87,12 @@ export const EditPostForm = ({
     formData.append("provinceId", data.provinceId)
     formData.append("districtId", data.districtId)
     formData.append("paymentPackageId", data.paymentPackageId)
+    if (!geocode) {
+      toast.error("Please enter a valid address!")
+      return
+    }
+    formData.append("longitude", geocode.longitude.toString())
+    formData.append("latitude", geocode.latitude.toString())
     data.existingPostImages.map((existingImage) => {
       formData.append("existingPostImages", existingImage.id)
     })
@@ -95,7 +113,7 @@ export const EditPostForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex gap-8 p-4">
-          <div className="flex w-2/5 flex-col gap-4 rounded-md border p-4">
+          <div className="flex w-3/5 flex-col gap-4 rounded-md border p-4">
             <FormField
               control={form.control}
               name="title"
@@ -124,7 +142,7 @@ export const EditPostForm = ({
                     <Textarea
                       id="description"
                       placeholder="Enter description..."
-                      rows={8}
+                      rows={20}
                       {...field}
                     />
                   </FormControl>
@@ -132,61 +150,64 @@ export const EditPostForm = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="address">Address</FormLabel>
-                  <div className="flex gap-2">
+            <div className="grid grid-cols-4 gap-4">
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="col-span-2 space-y-2">
+                    <FormLabel htmlFor="address">Address</FormLabel>
+                    <div className="flex gap-2">
+                      <FormControl>
+                        <Input
+                          id="address"
+                          type="text"
+                          className="text-ellipsis"
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e.target.value)
+                            debouncedRefreshGeocode(e.target.value)
+                          }}
+                        />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="price">Giá (VND)</FormLabel>
                     <FormControl>
-                      <Input id="address" type="text" {...field} />
+                      <Input id="price" type="number" {...field} />
                     </FormControl>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      // onClick={() => refreshGeocode(form.getValues("address"))}
-                    >
-                      <RefreshCcwIcon />
-                    </Button>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="price">Giá (VND)</FormLabel>
-                  <FormControl>
-                    <Input id="price" type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="area"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="area">Diện tích (m²)</FormLabel>
-                  <FormControl>
-                    <Input id="area" type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex gap-8">
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="area"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="area">Diện tích (m²)</FormLabel>
+                    <FormControl>
+                      <Input id="area" type="number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex justify-between gap-4">
               <FormField
                 control={form.control}
                 name="provinceId"
                 render={({ field }) => (
-                  <FormItem className="grid gap-2">
+                  <FormItem className="flex-1 space-y-2">
                     <FormLabel htmlFor="provinceId">Tỉnh/Thành phố</FormLabel>
                     <FormControl>
                       <Select
@@ -197,7 +218,7 @@ export const EditPostForm = ({
                         }}
                         defaultValue={field.value}
                       >
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger>
                           <SelectValue placeholder="Chọn tỉnh/thành phố" />
                         </SelectTrigger>
                         <SelectContent>
@@ -217,7 +238,7 @@ export const EditPostForm = ({
                 control={form.control}
                 name="districtId"
                 render={({ field }) => (
-                  <FormItem className="grid gap-2">
+                  <FormItem className="flex-1 space-y-2">
                     <FormLabel htmlFor="districtId">Quận/Huyện</FormLabel>
                     <FormControl>
                       <Select
@@ -226,7 +247,7 @@ export const EditPostForm = ({
                         defaultValue={field.value}
                         disabled={!form.watch("provinceId")}
                       >
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger>
                           <SelectValue placeholder="Chọn quận/huyện" />
                         </SelectTrigger>
                         <SelectContent>
@@ -400,8 +421,8 @@ export const EditPostForm = ({
               )}
             />
           </div>
-          <div className="w-3/5">
-            {/* <GoogleMap center={geocode || { lat: 10.7761, lng: 106.7021 }} /> */}
+          <div className="h-[500px] w-2/5">
+            <MapBox markedPoint={geocode} />
           </div>
         </div>
         <div className="mt-6 flex justify-end gap-4">

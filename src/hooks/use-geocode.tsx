@@ -2,18 +2,26 @@ import { getGeocode } from "@/lib/api/map.api"
 import { useState } from "react"
 import { toast } from "sonner"
 
-export const useGeocode = () => {
-  const [geocode, setGeocode] = useState<{ lat: number; lng: number } | null>(
-    null
-  )
+type Geocode = {
+  longitude: number
+  latitude: number
+}
+
+export const useGeocode = (defaultValue: Geocode | undefined = undefined) => {
+  const [geocode, setGeocode] = useState<Geocode | undefined>(defaultValue)
 
   const refreshGeocode = async (address: string) => {
+    if (!address) {
+      setGeocode(undefined)
+      return
+    }
+
     try {
       const geocode = await getGeocode(address)
       setGeocode(geocode)
     } catch {
       toast.error("Failed to fetch geocode")
-      setGeocode(null)
+      setGeocode(undefined)
     }
   }
 

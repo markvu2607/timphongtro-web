@@ -6,6 +6,7 @@ import { Post } from "@/types"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { MapBox } from "@/components/map-box"
 
 type Props = {
   post: Post
@@ -36,7 +37,11 @@ export const PostDetails = ({ post }: Props) => {
         <div className="whitespace-pre-line">{post.description}</div>
       </div>
       <Separator />
-      <div className="h-[400px]" />
+      <div className="h-[400px] w-full">
+        <MapBox
+          markedPoint={{ longitude: post.longitude, latitude: post.latitude }}
+        />
+      </div>
       <Separator />
 
       <div className="space-y-4">
