@@ -7,11 +7,11 @@ import { NotebookPenIcon, UserPenIcon } from "lucide-react"
 
 const links = [
   {
-    name: "Manage Posts",
+    name: "Quản lý bài đăng",
     href: "/dashboard/posts",
     icon: NotebookPenIcon,
   },
-  { name: "Profile", href: "/dashboard/profile", icon: UserPenIcon },
+  { name: "Thông tin cá nhân", href: "/dashboard/profile", icon: UserPenIcon },
 ]
 
 export default function NavLinks() {

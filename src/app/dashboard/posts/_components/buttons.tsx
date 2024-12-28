@@ -24,10 +24,10 @@ export function CreatePost() {
   return (
     <Link
       href="/dashboard/posts/create"
-      className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      className="flex h-10 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
-      <span className="hidden md:block">Create Post</span>{" "}
-      <PlusIcon className="size-4 md:ml-4" />
+      <PlusIcon className="size-4" />
+      <span className="hidden md:block">Tạo yêu cầu</span>
     </Link>
   )
 }
@@ -53,21 +53,20 @@ export function DeletePost({ id }: { id: string }) {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Bạn chắc chắn chứ?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              post.
+              Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Huỷ</AlertDialogCancel>
             <AlertDialogAction
               onClick={async () => {
                 "use server"
                 await deletePost(id)
               }}
             >
-              Delete
+              Xoá
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

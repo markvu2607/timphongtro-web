@@ -42,7 +42,7 @@ const UpdateProfileForm = ({ user }: Props) => {
     if (error) {
       toast.error(error)
     } else {
-      toast.success("Profile updated!")
+      toast.success("Cập nhật thông tin thành công!")
       router.refresh()
     }
   }
@@ -82,12 +82,12 @@ const UpdateProfileForm = ({ user }: Props) => {
                       toast.error(error)
                     } else {
                       toast.success(
-                        "Verification email sent! Please check your inbox."
+                        "Đã gửi email xác thực, vui lòng kiểm tra hộp thư!"
                       )
                     }
                   }}
                 >
-                  Verify
+                  Xác thực
                 </Button>
               )}
             </div>
@@ -99,9 +99,9 @@ const UpdateProfileForm = ({ user }: Props) => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="grid gap-1">
-              <FormLabel htmlFor="name">Name</FormLabel>
+              <FormLabel htmlFor="name">Tên</FormLabel>
               <FormControl>
-                <Input id="name" type="text" placeholder="Name" {...field} />
+                <Input id="name" type="text" placeholder="Tên" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -113,9 +113,14 @@ const UpdateProfileForm = ({ user }: Props) => {
           control={form.control}
           render={({ field }) => (
             <FormItem className="grid gap-1">
-              <FormLabel htmlFor="phone">Phone</FormLabel>
+              <FormLabel htmlFor="phone">Số điện thoại</FormLabel>
               <FormControl>
-                <Input id="phone" type="text" placeholder="Phone" {...field} />
+                <Input
+                  id="phone"
+                  type="text"
+                  placeholder="Số điện thoại"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -127,7 +132,7 @@ const UpdateProfileForm = ({ user }: Props) => {
           disabled={form.formState.isSubmitting}
           className="flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
         >
-          {form.formState.isSubmitting ? "Updating..." : "Update"}
+          Cập nhật
         </Button>
       </form>
     </Form>

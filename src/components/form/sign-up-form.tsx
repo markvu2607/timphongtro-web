@@ -26,7 +26,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { LoaderCircleIcon } from "lucide-react"
 
 export function SignUpForm() {
   const router = useRouter()
@@ -54,12 +53,10 @@ export function SignUpForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Sign up</CardTitle>
-        <CardDescription>
-          Enter your email below to sign up to your account
-        </CardDescription>
+        <CardTitle className="text-2xl">Đăng ký</CardTitle>
+        <CardDescription>Nhập email của bạn để tạo tài khoản</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -88,13 +85,13 @@ export function SignUpForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormLabel htmlFor="password">Mật khẩu</FormLabel>
                   <FormControl>
                     <Input
                       id="password"
                       type="password"
                       {...field}
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                     />
                   </FormControl>
                   <FormMessage />
@@ -108,14 +105,14 @@ export function SignUpForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="confirmPassword">
-                    Confirm password
+                    Xác nhận mật khẩu
                   </FormLabel>
                   <FormControl>
                     <Input
                       id="confirmPassword"
                       type="password"
                       {...field}
-                      placeholder="Confirm password"
+                      placeholder="Xác nhận mật khẩu"
                     />
                   </FormControl>
                   <FormMessage />
@@ -128,14 +125,9 @@ export function SignUpForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <FormLabel htmlFor="name">Tên</FormLabel>
                   <FormControl>
-                    <Input
-                      id="name"
-                      type="text"
-                      {...field}
-                      placeholder="Name"
-                    />
+                    <Input id="name" type="text" {...field} placeholder="Tên" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,13 +139,13 @@ export function SignUpForm() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="phone">Phone</FormLabel>
+                  <FormLabel htmlFor="phone">Số điện thoại</FormLabel>
                   <FormControl>
                     <Input
                       id="phone"
                       type="text"
                       {...field}
-                      placeholder="Phone"
+                      placeholder="Số điện thoại"
                     />
                   </FormControl>
                   <FormMessage />
@@ -166,18 +158,14 @@ export function SignUpForm() {
               className="w-full"
               disabled={form.formState.isSubmitting}
             >
-              {form.formState.isSubmitting ? (
-                <LoaderCircleIcon className="size-16 animate-spin text-blue-600" />
-              ) : (
-                "Sign up"
-              )}
+              Đăng ký
             </Button>
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">
-          Have an account?{" "}
+          Đã có tài khoản?{" "}
           <Link href="/auth/sign-in" className="underline">
-            Sign in
+            Đăng nhập ngay
           </Link>
         </div>
       </CardContent>

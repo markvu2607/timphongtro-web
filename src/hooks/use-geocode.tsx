@@ -20,7 +20,7 @@ export const useGeocode = (defaultValue: Geocode | undefined = undefined) => {
       const geocode = await getGeocode(address)
       setGeocode(geocode)
     } catch {
-      toast.error("Failed to fetch geocode")
+      toast.error("Không thể tìm thấy địa chỉ!")
       setGeocode(undefined)
     }
   }

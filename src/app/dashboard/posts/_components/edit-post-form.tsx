@@ -58,9 +58,9 @@ export const EditPostForm = ({
       address: post.address,
       price: post.price,
       area: post.area,
-      provinceId: post.province.id,
-      districtId: post.district.id,
-      paymentPackageId: post.paymentPackage.id,
+      provinceId: post.province!.id,
+      districtId: post.district!.id,
+      paymentPackageId: post.paymentPackage!.id,
       existingPostImages: post.postImages,
       postImages: [],
     },
@@ -88,7 +88,7 @@ export const EditPostForm = ({
     formData.append("districtId", data.districtId)
     formData.append("paymentPackageId", data.paymentPackageId)
     if (!geocode) {
-      toast.error("Please enter a valid address!")
+      toast.error("Vui lòng chọn địa chỉ trên bản đồ!")
       return
     }
     formData.append("longitude", geocode.longitude.toString())
@@ -104,7 +104,7 @@ export const EditPostForm = ({
     if (error) {
       toast.error(error)
     } else {
-      toast.success("Post updated successfully!")
+      toast.success("Cập nhật yêu cầu thành công! Vui lòng chờ duyệt.")
       router.push("/dashboard/posts")
     }
   }
@@ -119,12 +119,12 @@ export const EditPostForm = ({
               name="title"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="title">Title</FormLabel>
+                  <FormLabel htmlFor="title">Tiêu đề</FormLabel>
                   <FormControl>
                     <Input
                       id="title"
                       type="text"
-                      placeholder="Title"
+                      placeholder="Tiê đề"
                       {...field}
                     />
                   </FormControl>
@@ -137,11 +137,11 @@ export const EditPostForm = ({
               name="description"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <FormLabel htmlFor="description">Mô tả</FormLabel>
                   <FormControl>
                     <Textarea
                       id="description"
-                      placeholder="Enter description..."
+                      placeholder="Nhập mô tả..."
                       rows={20}
                       {...field}
                     />
@@ -156,7 +156,7 @@ export const EditPostForm = ({
                 name="address"
                 render={({ field }) => (
                   <FormItem className="col-span-2 space-y-2">
-                    <FormLabel htmlFor="address">Address</FormLabel>
+                    <FormLabel htmlFor="address">Địa chỉ</FormLabel>
                     <div className="flex gap-2">
                       <FormControl>
                         <Input
@@ -324,7 +324,7 @@ export const EditPostForm = ({
               render={({ field }) => (
                 <FormItem className="grid gap-2">
                   <FormLabel htmlFor="existingPostImages">
-                    Current Images
+                    Ảnh hiện tại
                   </FormLabel>
                   <FormControl>
                     <div className="flex flex-wrap gap-2">
@@ -363,7 +363,9 @@ export const EditPostForm = ({
               name="postImages"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="postImages">Upload new images</FormLabel>
+                  <FormLabel htmlFor="postImages">
+                    Upload thêm ảnh mới
+                  </FormLabel>
                   <FormControl>
                     <div className="flex flex-wrap gap-2">
                       {field.value?.map((file, index) => (
@@ -430,16 +432,14 @@ export const EditPostForm = ({
             href="/dashboard/posts"
             className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
-            Cancel
+            Huỷ
           </Link>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
             className="flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
           >
-            {form.formState.isSubmitting
-              ? "Updating request..."
-              : "Update Request"}
+            Cập nhật yêu cầu
           </Button>
         </div>
       </form>

@@ -33,7 +33,7 @@ export default async function PostsTable({
 }: PostsTableProps) {
   return (
     <>
-      <div className="mt-6 flow-root">
+      <div className="mt-6 w-full">
         <div className="inline-block min-w-full align-middle">
           <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
             <table className="hidden min-w-full text-gray-900 md:table">
@@ -55,12 +55,6 @@ export default async function PostsTable({
                     Status
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    District
-                  </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
-                    Province
-                  </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
                     Gói tin
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
@@ -78,17 +72,20 @@ export default async function PostsTable({
                       key={post.id}
                       className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                     >
-                      <td className="whitespace-nowrap p-3">{post.title}</td>
-                      <td className="whitespace-nowrap p-3">
-                        <Image
-                          src={post.thumbnail}
-                          className="rounded-sm"
-                          width={28}
-                          height={28}
-                          alt={`${post.title}'s profile picture`}
-                        />
+                      <td className="max-w-[200px] p-3">{post.title}</td>
+                      <td className="grid grid-cols-4 gap-1 p-3">
+                        {post.postImages?.map((image) => (
+                          <div key={image.id} className="relative size-8">
+                            <Image
+                              src={image.url}
+                              alt={`${post.title}'s profile picture`}
+                              className="rounded-sm object-cover"
+                              fill
+                            />
+                          </div>
+                        ))}
                       </td>
-                      <td className="whitespace-nowrap p-3">
+                      <td className="max-w-[200px] p-3">
                         <p>{post.address}</p>
                       </td>
                       <td className="whitespace-nowrap p-3">
@@ -104,22 +101,18 @@ export default async function PostsTable({
                         </Badge>
                       </td>
                       <td className="whitespace-nowrap p-3">
-                        {post.district.name}
+                        {post.paymentPackage?.name}
                       </td>
                       <td className="whitespace-nowrap p-3">
-                        {post.province.name}
-                      </td>
-                      <td className="whitespace-nowrap p-3">
-                        {post.paymentPackage.name}
-                      </td>
-                      <td className="whitespace-nowrap p-3">
-                        <Link
-                          target="_blank"
-                          href={`/posts/${post.id}`}
-                          className="text-blue-500 underline"
-                        >
-                          View
-                        </Link>
+                        {post.status === EPostStatus.PUBLISHED && (
+                          <Link
+                            target="_blank"
+                            href={`/posts/${post.id}`}
+                            className="text-blue-500 underline"
+                          >
+                            View
+                          </Link>
+                        )}
                       </td>
                       <td className="whitespace-nowrap py-3 pl-6 pr-3">
                         <div className="flex justify-end gap-3">

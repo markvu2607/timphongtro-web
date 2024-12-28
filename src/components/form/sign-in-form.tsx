@@ -41,7 +41,7 @@ export function SignInForm() {
 
     const result = await signIn(data)
     if (result.success) {
-      toast.success("Signed in successfully!")
+      toast.success("Đăng nhập thành công!")
       router.push("/dashboard/posts")
     }
     if (result.error) {
@@ -56,11 +56,11 @@ export function SignInForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Sign in</CardTitle>
+        <CardTitle className="text-2xl">Đăng nhập</CardTitle>
         <CardDescription>
-          Enter your email below to sign in to your account
+          Nhập email của bạn để đăng nhập vào tài khoản
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -83,10 +83,11 @@ export function SignInForm() {
               )}
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Mật khẩu</Label>
               <Input
                 id="password"
                 type="password"
+                placeholder="Mật khẩu"
                 {...register("password")}
                 onChange={(e) => {
                   register("password").onChange(e)
@@ -105,14 +106,14 @@ export function SignInForm() {
               </p>
             )}
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Signing in..." : "Sign in"}
+              Đăng nhập
             </Button>
           </div>
         </form>
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
+          Bạn chưa có tài khoản?{" "}
           <Link href="/auth/sign-up" className="underline">
-            Sign up
+            Đăng ký ngay
           </Link>
         </div>
       </CardContent>

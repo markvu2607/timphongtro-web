@@ -80,7 +80,7 @@ export const CreatePostForm = ({
     formData.append("districtId", data.districtId)
     formData.append("paymentPackageId", data.paymentPackageId)
     if (!geocode) {
-      toast.error("Please enter a valid address!")
+      toast.error("Vui lòng chọn địa chỉ trên bản đồ!")
       return
     }
     formData.append("longitude", geocode.longitude.toString())
@@ -93,7 +93,7 @@ export const CreatePostForm = ({
     if (error) {
       toast.error(error)
     } else {
-      toast.success("Post created successfully!")
+      toast.success("Tạo yêu cầu thành công! Vui lòng chờ duyệt.")
       router.push("/dashboard/posts")
     }
   }
@@ -108,12 +108,12 @@ export const CreatePostForm = ({
               name="title"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="title">Title</FormLabel>
+                  <FormLabel htmlFor="title">Tiêu đề</FormLabel>
                   <FormControl>
                     <Input
                       id="title"
                       type="text"
-                      placeholder="Title"
+                      placeholder="Tiêu đề"
                       {...field}
                     />
                   </FormControl>
@@ -126,11 +126,11 @@ export const CreatePostForm = ({
               name="description"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <FormLabel htmlFor="description">Mô tả</FormLabel>
                   <FormControl>
                     <Textarea
                       id="description"
-                      placeholder="Enter description..."
+                      placeholder="Nhập mô tả..."
                       rows={20}
                       {...field}
                     />
@@ -145,7 +145,7 @@ export const CreatePostForm = ({
                 name="address"
                 render={({ field }) => (
                   <FormItem className="col-span-2 space-y-2">
-                    <FormLabel htmlFor="address">Address</FormLabel>
+                    <FormLabel htmlFor="address">Địa chỉ</FormLabel>
                     <div className="flex gap-2">
                       <FormControl>
                         <Input
@@ -322,7 +322,7 @@ export const CreatePostForm = ({
               name="postImages"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="postImages">Upload Images</FormLabel>
+                  <FormLabel htmlFor="postImages">Upload ảnh</FormLabel>
                   <FormControl>
                     <div className="flex flex-wrap gap-2">
                       {field.value?.map((file, index) => (
@@ -390,16 +390,14 @@ export const CreatePostForm = ({
             href="/dashboard/posts"
             className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
-            Cancel
+            Huỷ
           </Link>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
             className="flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
           >
-            {form.formState.isSubmitting
-              ? "Creating request..."
-              : "Create Request"}
+            Tạo yêu cầu
           </Button>
         </div>
       </form>
