@@ -72,7 +72,7 @@ export const PostSearchForm = ({
       params.set("maxArea", data.maxArea.toString())
     }
 
-    router.push(`/posts?${params.toString()}`)
+    router.push(`/?${params.toString()}`)
   }
 
   return (
@@ -240,7 +240,7 @@ export const PostSearchForm = ({
             size="icon"
             type="button"
             onClick={() => {
-              router.push("/posts")
+              router.push("/")
               form.reset()
             }}
           >

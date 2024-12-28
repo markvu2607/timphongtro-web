@@ -2,7 +2,7 @@
 
 import { PhoneCallIcon } from "lucide-react"
 import Link from "next/link"
-import { Ribbon, RibbonContainer } from "react-ribbons"
+import dynamic from "next/dynamic"
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -10,6 +10,16 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { Post } from "@/types"
 import { QuiltedImages } from "./quilted-images"
+
+const Ribbon = dynamic(
+  () => import("react-ribbons").then((mod) => mod.Ribbon),
+  { ssr: false }
+)
+
+const RibbonContainer = dynamic(
+  () => import("react-ribbons").then((mod) => mod.RibbonContainer),
+  { ssr: false }
+)
 
 type PostCardProps = {
   post: Post

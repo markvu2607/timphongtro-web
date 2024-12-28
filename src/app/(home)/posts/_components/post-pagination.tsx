@@ -24,7 +24,7 @@ export function PostPagination({
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams)
     params.set("page", pageNumber.toString())
-    return `/posts?${params.toString()}`
+    return `/?${params.toString()}`
   }
 
   return (

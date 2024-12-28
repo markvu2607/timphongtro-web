@@ -29,6 +29,7 @@ export const QuiltedImages = ({ images, onClick }: QuiltedImagesProps) => {
             src={image.url}
             alt={image.url}
             fill
+            className="object-cover"
             onClick={() => onClick?.(index)}
           />
         </div>

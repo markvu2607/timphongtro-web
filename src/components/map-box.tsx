@@ -12,6 +12,8 @@ type MapBoxProps = {
 }
 
 export const MapBox = ({ markedPoint }: MapBoxProps) => {
+  const [canZoom, setCanZoom] = useState<boolean>(false)
+
   const [viewState, setViewState] = useState({
     longitude: 105.8247682227647,
     latitude: 21.00743990315998,
@@ -25,6 +27,26 @@ export const MapBox = ({ markedPoint }: MapBoxProps) => {
     }))
   }, [markedPoint])
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey) {
+        setCanZoom(true)
+      }
+    }
+
+    const handleKeyUp = () => {
+      setCanZoom(false)
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener("keyup", handleKeyUp)
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+      window.removeEventListener("keyup", handleKeyUp)
+    }
+  }, [])
+
   return (
     <Map
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
@@ -32,6 +54,7 @@ export const MapBox = ({ markedPoint }: MapBoxProps) => {
       onMove={(evt) => setViewState(evt.viewState)}
       style={{ width: "100%", height: "100%" }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
+      scrollZoom={canZoom}
     >
       {markedPoint && (
         <Marker

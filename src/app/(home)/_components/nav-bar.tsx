@@ -24,10 +24,6 @@ const routes = [
     href: "/",
   },
   {
-    name: "Phòng trọ",
-    href: "/posts",
-  },
-  {
     name: "Tin tức",
     href: "/news",
   },
