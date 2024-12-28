@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { NewsList } from "./_components/news-list"
 import Search from "@/components/search"
 
-type PostListPageProps = {
+type PageProps = {
   searchParams: Promise<{
     page: number
     query: string
@@ -16,7 +16,7 @@ type PostListPageProps = {
   }>
 }
 
-const NewsListPage = async ({ searchParams }: PostListPageProps) => {
+const Page = async ({ searchParams }: PageProps) => {
   const awaitedSearchParams = await searchParams
 
   const { page: awaitedPage, query: awaitedQuery } = awaitedSearchParams
@@ -34,4 +34,4 @@ const NewsListPage = async ({ searchParams }: PostListPageProps) => {
   )
 }
 
-export default NewsListPage
+export default Page

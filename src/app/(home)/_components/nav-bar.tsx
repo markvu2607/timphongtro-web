@@ -34,7 +34,7 @@ export const Navbar = () => {
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 h-[80px] bg-white shadow-lg">
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-12 px-4">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-12 px-4 sm:px-6 lg:px-8">
         <div className="text-2xl font-bold">
           <Link href="/">
             <Image alt="logo" src={logoSrc} width={52} height={52} priority />

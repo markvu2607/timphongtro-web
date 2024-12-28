@@ -60,11 +60,11 @@ export type Post = {
   longitude: number
   latitude: number
   status: EPostStatus
-  district: District
-  province: Province
-  paymentPackage: PaymentPackage
+  district?: District
+  province?: Province
+  paymentPackage?: PaymentPackage
   user?: User
-  postImages: PostImage[]
+  postImages?: PostImage[]
 }
 
 export type PaginatedResponse<T> = {

@@ -20,17 +20,20 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   }
 
   return (
-    <article className="container mx-auto max-w-4xl space-y-4 px-4 py-8">
+    <article className="container mx-auto max-w-7xl space-y-4 px-4 py-8">
       <h1 className="mb-4 text-4xl font-bold">{news.title}</h1>
       <p className="text-gray-500">{news.shortDescription}</p>
-      <div className="mb-6 flex items-center space-x-4">
-        <span className="text-sm text-gray-500">
+      <div className="mb-8">
+        <span className="text-sm">
           Đăng {dayjs(news.publishedAt).fromNow()}
         </span>
         {news.province && (
-          <Badge variant="secondary" className="text-gray-500">
-            {news.province.name}
-          </Badge>
+          <>
+            <span className="mx-4">|</span>
+            <Badge variant="secondary" className="text-gray-500">
+              {news.province.name}
+            </Badge>
+          </>
         )}
       </div>
       <div className="relative mb-6 flex h-[400px] w-full justify-center">

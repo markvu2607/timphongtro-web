@@ -1,6 +1,8 @@
 import { NewsPagination } from "./news-pagination"
 import * as newsApi from "@/lib/api/news.api"
 import { NewsCard } from "./news-card"
+import { Fragment } from "react"
+import { Separator } from "@/components/ui/separator"
 
 const ITEMS_PER_PAGE = 15
 
@@ -31,18 +33,18 @@ export async function NewsList({
   }
 
   return (
-    <div>
-      <div className="mb-8 grid grid-cols-3 gap-4">
-        <div className="col-span-2 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            {news.map((item) => (
-              <NewsCard key={item.id} news={item} />
-            ))}
-          </div>
-          <NewsPagination totalPages={totalPages} currentPage={currentPage} />
-        </div>
-        <div className="col-span-1"></div>
+    <div className="space-y-4">
+      <div>
+        {news.map((item, index) => (
+          <Fragment key={item.id}>
+            <NewsCard key={item.id} news={item} />
+            {index < news.length - 1 && <Separator className="my-4" />}
+          </Fragment>
+        ))}
       </div>
+      {totalPages > 1 && (
+        <NewsPagination totalPages={totalPages} currentPage={currentPage} />
+      )}
     </div>
   )
 }

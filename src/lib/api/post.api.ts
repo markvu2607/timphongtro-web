@@ -93,3 +93,6 @@ export const getPublishedPosts = async (
 
 export const getPublishedPostById = async (id: string): Promise<Post> =>
   apiClient.get(`/posts/published/${id}`).then((data) => data.json())
+
+export const getPublishedPremiumPosts = async (): Promise<Post[]> =>
+  apiClient.get("/posts/published/premium").then((data) => data.json())

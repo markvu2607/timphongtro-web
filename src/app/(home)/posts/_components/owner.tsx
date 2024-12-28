@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog"
 import { Post } from "@/types"
 import { ReportPost } from "./report-post"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 
 type Props = {
   post: Post
@@ -64,73 +65,84 @@ export const Owner = ({ post }: Props) => {
   }
 
   return (
-    <div className="space-y-8 rounded-lg border p-8 shadow-md">
-      <div className="flex flex-col items-center gap-2">
-        <Avatar className="size-24">
-          <AvatarImage src={post.user?.avatar || "/default-avatar.png"} />
-        </Avatar>
-        <div className="text-center">
-          <p className="text-xl font-bold">{post.user?.name}</p>
-          <p className="text-sm font-light text-gray-500">{post.user?.email}</p>
+    <Card className="shadow-md">
+      <CardHeader>
+        <div className="flex flex-col items-center gap-2">
+          <Avatar className="size-24">
+            <AvatarImage src={post.user?.avatar || "/default-avatar.png"} />
+          </Avatar>
+          <div className="text-center">
+            <p className="text-xl font-bold">{post.user?.name}</p>
+            <p className="text-sm font-light text-gray-500">
+              {post.user?.email}
+            </p>
+          </div>
         </div>
-      </div>
-
-      <Button
-        variant="outline"
-        className="flex w-full items-center justify-center"
-      >
-        <PhoneCallIcon />
-        {post.user?.phone}
-      </Button>
-
-      <div className="flex justify-between gap-2">
-        <Button variant="ghost" onClick={haveToggleSave}>
-          <BookmarkIcon className={isSaved ? "fill-current" : ""} />
-          {isSaved ? "Bỏ lưu" : "Lưu lại"}
+      </CardHeader>
+      <CardContent>
+        <Button
+          variant="outline"
+          className="flex w-full items-center justify-center"
+        >
+          <PhoneCallIcon />
+          {post.user?.phone}
         </Button>
+      </CardContent>
+      <CardFooter>
+        <div className="flex justify-between gap-2">
+          <Button variant="ghost" onClick={haveToggleSave} className="flex-1">
+            <BookmarkIcon className={isSaved ? "fill-current" : ""} />
+            {isSaved ? "Bỏ lưu" : "Lưu lại"}
+          </Button>
 
-        <Dialog open={openShare} onOpenChange={setOpenShare}>
-          <DialogTrigger asChild>
-            <Button variant="ghost">
-              <ShareIcon />
-              Chia sẻ
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Chia sẻ</DialogTitle>
-              <DialogDescription>Chia sẻ đường dẫn bài đăng</DialogDescription>
-            </DialogHeader>
-            <div className="rounded-md border p-4 text-gray-400" id="share-url">
-              {window.location.origin}/posts/{post.id}
-            </div>
-            <Button type="button" onClick={handleClickCopy}>
-              <CopyIcon className="size-4" />
-              Sao chép
-            </Button>
-          </DialogContent>
-        </Dialog>
+          <Dialog open={openShare} onOpenChange={setOpenShare}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" className="flex-1">
+                <ShareIcon />
+                Chia sẻ
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Chia sẻ</DialogTitle>
+                <DialogDescription>
+                  Chia sẻ đường dẫn bài đăng
+                </DialogDescription>
+              </DialogHeader>
+              <div
+                className="rounded-md border p-4 text-gray-400"
+                id="share-url"
+              >
+                {window.location.origin}/posts/{post.id}
+              </div>
+              <Button type="button" onClick={handleClickCopy}>
+                <CopyIcon className="size-4" />
+                Sao chép
+              </Button>
+            </DialogContent>
+          </Dialog>
 
-        <Dialog open={openReport} onOpenChange={setOpenReport}>
-          <DialogTrigger asChild>
-            <Button variant="ghost">
-              <TriangleAlertIcon />
-              Báo xấu
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Báo xấu</DialogTitle>
-            </DialogHeader>
-            <ReportPost
-              post={post}
-              onSuccess={() => {
-                setOpenReport(false)
-              }}
-            />
-          </DialogContent>
-        </Dialog>
-      </div>
-    </div>
+          <Dialog open={openReport} onOpenChange={setOpenReport}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" className="flex-1">
+                <TriangleAlertIcon />
+                Báo xấu
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Báo xấu</DialogTitle>
+              </DialogHeader>
+              <ReportPost
+                post={post}
+                onSuccess={() => {
+                  setOpenReport(false)
+                }}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
+      </CardFooter>
+    </Card>
   )
 }

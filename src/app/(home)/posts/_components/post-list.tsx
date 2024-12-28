@@ -34,16 +34,13 @@ export async function PostList({
   }
 
   return (
-    <div>
-      <div className="mb-8 grid grid-cols-3 gap-4">
-        <div className="col-span-2 space-y-4">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-          <PostPagination totalPages={totalPages} currentPage={currentPage} />
-        </div>
-        <div className="col-span-1"></div>
-      </div>
+    <div className="space-y-4">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
+      {totalPages > 1 && (
+        <PostPagination totalPages={totalPages} currentPage={currentPage} />
+      )}
     </div>
   )
 }
