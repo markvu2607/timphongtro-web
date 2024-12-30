@@ -31,13 +31,13 @@ export function PostCard({ post }: PostCardProps) {
       <Card
         className={cn(
           "overflow-hidden",
-          post.paymentPackage.price > 0 && "bg-orange-50"
+          post.paymentPackage!.price > 0 && "bg-orange-50"
         )}
       >
         <Link href={`/posts/${post.id}`}>
           <CardHeader className="p-4 pb-0">
             <QuiltedImages
-              images={post.postImages.map((image) => image.url).slice(0, 4)}
+              images={post.postImages!.map((image) => image.url).slice(0, 4)}
             />
           </CardHeader>
         </Link>
@@ -53,7 +53,7 @@ export function PostCard({ post }: PostCardProps) {
                 </p>
                 <p className="text-sm text-gray-700">{post.area}m²</p>
                 <p className="text-sm text-gray-700">
-                  {post.district.name}, {post.province.name}
+                  {post.district!.name}, {post.province!.name}
                 </p>
               </div>
             </div>
@@ -83,7 +83,7 @@ export function PostCard({ post }: PostCardProps) {
           </div>
         </CardFooter>
       </Card>
-      {post.paymentPackage.price > 0 && (
+      {post.paymentPackage!.price > 0 && (
         <Ribbon
           side="left"
           type="corner"
