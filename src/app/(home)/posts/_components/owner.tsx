@@ -102,7 +102,7 @@ export const Owner = ({ post }: Props) => {
                 Chia sẻ
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent>
               <DialogHeader>
                 <DialogTitle>Chia sẻ</DialogTitle>
                 <DialogDescription>
@@ -129,7 +129,7 @@ export const Owner = ({ post }: Props) => {
                 Báo xấu
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent>
               <DialogHeader>
                 <DialogTitle>Báo xấu</DialogTitle>
               </DialogHeader>
