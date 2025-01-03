@@ -15,7 +15,7 @@ export const PremiumPostList = async () => {
         <p className="font-semibold">Bài đăng nổi bật</p>
       </CardHeader>
       <CardContent className="space-y-2 p-4 pt-0">
-        {premiumPosts.slice(0, 5).map((post) => (
+        {premiumPosts.slice(0, 3).map((post) => (
           <PremiumPostCard key={post.id} post={post} />
         ))}
       </CardContent>

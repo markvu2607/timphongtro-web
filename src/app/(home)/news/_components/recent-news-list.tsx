@@ -15,7 +15,7 @@ export const RecentNewsList = async () => {
         <p className="font-semibold">Tin tức gần đây</p>
       </CardHeader>
       <CardContent className="space-y-2 p-4 pt-0">
-        {recentNewsList.slice(0, 5).map((news) => (
+        {recentNewsList.slice(0, 3).map((news) => (
           <RecentNewsCard key={news.id} news={news} />
         ))}
       </CardContent>
