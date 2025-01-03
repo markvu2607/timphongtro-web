@@ -13,9 +13,9 @@ export default async function CreatePostPage() {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Posts", href: "/dashboard/posts" },
+          { label: "Quản lý bài đăng", href: "/dashboard/posts" },
           {
-            label: "Create Post",
+            label: "Tạo bài đăng",
             href: "/dashboard/posts/create",
             active: true,
           },

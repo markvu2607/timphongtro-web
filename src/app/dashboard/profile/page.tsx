@@ -8,7 +8,7 @@ export default async function ProfilePage() {
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>Profile</h1>
+        <h1 className={`${lusitana.className} text-2xl`}>Thông tin cá nhân</h1>
       </div>
       <div className="mt-8 w-full max-w-[300px]">
         <UpdateProfileForm user={user} />

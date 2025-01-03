@@ -28,9 +28,9 @@ export default async function EditPostPage(props: EditPostPageProps) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Posts", href: "/dashboard/posts" },
+          { label: "Quản lý bài đăng", href: "/dashboard/posts" },
           {
-            label: "Edit Post",
+            label: "Sửa bài đăng",
             href: `/dashboard/posts/${id}/edit`,
             active: true,
           },

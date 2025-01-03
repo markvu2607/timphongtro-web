@@ -40,19 +40,19 @@ export default async function PostsTable({
               <thead className="rounded-lg text-left text-sm font-normal">
                 <tr>
                   <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                    Title
+                    Tiêu đề
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Thumbnail
+                    Ảnh
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Address
+                    Địa chỉ
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Created at
+                    Thời gian tạo
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Status
+                    Trạng thái
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
                     Gói tin
@@ -60,9 +60,7 @@ export default async function PostsTable({
                   <th scope="col" className="px-3 py-5 font-medium">
                     Link
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
-                    Actions
-                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium"></th>
                 </tr>
               </thead>
               <tbody className="bg-white">
@@ -110,7 +108,7 @@ export default async function PostsTable({
                             href={`/posts/${post.id}`}
                             className="text-blue-500 underline"
                           >
-                            View
+                            Xem
                           </Link>
                         )}
                       </td>
@@ -135,7 +133,7 @@ export default async function PostsTable({
                 ) : (
                   <tr>
                     <td colSpan={9} className="p-3 text-center">
-                      No posts found
+                      Không có bài đăng nào
                     </td>
                   </tr>
                 )}
